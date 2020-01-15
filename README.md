@@ -1,0 +1,1 @@
+## Tarefas do curso de verão de 2020 do PPGEst UFRGS.
