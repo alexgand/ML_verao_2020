@@ -76,7 +76,44 @@ for (i in seq(repeticoes))
   
   }
 
+# a) quantas vezes acertou exatamente as variaveis.
+print(sum(acertou_exatamente)/1000)
+sum(acertou_exatamente)
+
+# b) quantas vezes incluiu as cinco variaveis corretas, nao importando se incluiu outras tambem.
+print(sum(incluiu_variaveis_corretas))
+
+# c) 
+
+# d) 
 # transforma vetor em matriz a cada 6th observacao:
 coeficientes = as.data.frame(matrix(coefs_acertou_exatamente, ncol = 6,  byrow = TRUE), stringsAsFactors = FALSE)
-colnames(coeficientes) <- c('intercept',paste("X",c(1,10,20,50,90), sep = ""))
-#colnames(coeficientes) <- c('intercept',paste("X",c(1,2,3,4,5), sep = "")) Exercicio 3
+#colnames(coeficientes) <- c('intercept',paste("X",c(1,10,20,50,90), sep = ""))
+colnames(coeficientes) <- c('intercept',paste("X",c(1,2,3,4,5), sep = ""))
+# medias:
+colMeans(coeficientes)
+# histogramas:
+# mapply(hist,coeficientes,main=colnames(coeficientes),xlab="",breaks=50, col='gray')
+# teste para ver se eh igual ao valor correto:
+t.test(coeficientes$intercept, mu=20)
+t.test(coeficientes$X2, mu=5)
+
+# e) graficos de lambda:
+summary(lambdas)
+hist(lambdas,col='gray')
+
+summary(lambdas_acertou)
+# hist(lambdas_acertou,col='gray')
+
+summary(lambdas_errou)
+# hist(lambdas_errou,col='gray')
+
+# densidade comparada:
+df_acertou <-  data.frame(lambdas_acertou)
+colnames(df_acertou) <- c('lambda')
+df_acertou$tipo <- 'acertou'
+df_errou <-  data.frame(lambdas_errou)
+colnames(df_errou) <- c('lambda')
+df_errou$tipo <- 'errou'
+total <- rbind(df_acertou, df_errou)
+ggplot(total, aes(lambda, fill = tipo)) + geom_density(alpha = 0.2)
